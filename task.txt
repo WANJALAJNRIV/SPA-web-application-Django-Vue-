@@ -1,0 +1,54 @@
+This is a group coursework worth 30%, done at my university. I also took the liberty of adding the starter file/code that we are expected to use. Please red the README files inside of it. The following is the coursework description:
+
+Work in groups of 3-4 students (each group must have at least three members but no more than four members).
+
+ You are being asked to develop a Single Page Application (SPA) using Django for the model-based web API and Vue/Vite for the reactive frontend. 
+ 
+ 
+You must include frontend routing using Vue router and use a global store using Pinia. 
+This coursework does not need to be checked by your demonstrator. 
+The module leader will mark all the submissions. As with the individual coursework 2, you must use this Github repository as a starting point for your group coursework.
+
+
+Your task is to develop an online newspaper web app using the Django framework (think of BBC News or the online portals for The Times, The Guardian, etc.).
+
+ The app should provide the following functionalities:
+********** User**********reate an account on the web app and login / logout. 
+You should use a********** User **********as explained here) which inherits from Django's A**********User **********and make use of Django's authentication framework.
+The signup and login should be done using Django templates and forms (Server Side Rendering).
+ 
+Vue only needs to be used o********** user **********enticated.
+
+2) Your********** user **********hould include a profile image, email, and date of birth********** use**************ser **********be able to edit all these fields in a "profile page", including their profile picture. 
+Changes to the profile page should be saved via Ajax (using Vue and the fetch API).
+
+********** User**********rowser news articles, and news article are grouped into categories (e.g. Sport, World, Finance,…).
+********** User**********ble to select (in their profile page) their favourite news categories, and should only be shown articles within their favourite categories.
+********** User**********ble to post comments on an article, and are able to reply to previous comments on the same article. They should also be able to edit and delete their own comments.
+6) Posting/editing/deleting a comment on a news article should be also done via Ajax.
+7) Your Vue frontend should use typescript, and make good use of static typing, including custom interfaces for news articles and categories. Your Python backend should also make use of type annotations (type hints). So, both frontend and backend should support static type checking.
+
+Outcome: Once fully tested, your application should be deployed to the EECS OpenShift platform (to be discussed in week 8) — one deployed app per team. Make sure your submitted application has at least********** user**********t least 10 news articles of different categories (at least three categories). Each group should submit the code including a README file which should contain:
+
+l****** of group members, with a short description (one sentence) of what each member was assigned to do, and what they actually did in terms of contributing to the final deliverable
+the URL of your deployed application (if deployed) ********** user**************ssword for the admin page ********** user**************sswords of the********** user**********
+Marking criteria:
+Criteria - Max. mark
+App deployed to Openshift 10
+
+README and requirements.txt files included with the requested information 5
+
+Account creation and login working 10
+
+Using Django's A**********User **********ith required fields and Django's authentication framework 10
+
+Using frontend routing (Vue router) and a global store (pinia) 10
+
+Correct modelling of application data, in********** user********** articles, categories, and comments 10
+
+Profile page included, with profile picture, email, date of birth and l****** of favourite news categories (all editable via Ajax) 15
+
+Page with a l****** of news article included, with articles grouped by category 10
+Full use of static types both in Python (type annotations) and Vue (typescript) 10
+
+Total: 100

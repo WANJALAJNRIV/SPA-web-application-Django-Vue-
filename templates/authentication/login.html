@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* Adjust as needed */
+    }
+
+    h2 {
+      color: blue;
+      margin-bottom: 20px;
+    }
+
+    form {
+      width: 300px; /* Adjust as needed */
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      background-color: blue;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+    }
+
+    a {
+      color: blue;
+      margin-top: 10px;
+      display: block;
+    }
+  </style>
+
+  <div class="container">
+    <h2>Login</h2>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+    </form>
+    <a href="{% url 'register' %}">Register</a>
+  </div>
+{% endblock %}
