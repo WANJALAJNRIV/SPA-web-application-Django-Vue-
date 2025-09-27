@@ -1,50 +1,96 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
   <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh; /* Adjust as needed */
+      height: 100vh;
+    }
+
+    .card {
+      background: #fff;
+      padding: 30px 25px;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
     }
 
     h2 {
-      color: blue;
       margin-bottom: 20px;
+      color: #333;
+      font-weight: 600;
     }
 
-    form {
-      width: 300px; /* Adjust as needed */
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    form p {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 95%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      outline: none;
+      transition: border 0.2s ease;
+    }
+
+    input:focus {
+      border-color: #0d6efd;
     }
 
     button {
-      background-color: blue;
-      color: white;
+      background-color: #0d6efd;
+      color: #fff;
       padding: 10px 15px;
       border: none;
+      border-radius: 6px;
+      width: 100%;
       cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      transition: background 0.3s ease;
     }
 
-    a {
-      color: blue;
-      margin-top: 10px;
+    button:hover {
+      background-color: #0b5ed7;
+    }
+
+    .footer-link {
+      margin-top: 15px;
       display: block;
+      font-size: 14px;
+      color: #0d6efd;
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
     }
   </style>
 
   <div class="container">
-    <h2>Login</h2>
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Login</button>
-    </form>
-    <a href="{% url 'register' %}">Register</a>
+    <div class="card">
+      <h2>Login</h2>
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+      </form>
+      <a href="{% url 'register' %}" class="footer-link">Create an account</a>
+    </div>
   </div>
 {% endblock %}
