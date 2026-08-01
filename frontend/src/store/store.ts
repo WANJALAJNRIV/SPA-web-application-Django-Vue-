@@ -34,13 +34,15 @@ export const useAuthStore = defineStore('auth', {
   },
 });
 
+const storedUserDetails = localStorage.getItem('allUserDetails');
+
 // Profile Store
 export const useProfileStore = defineStore('profile', {
   // State
   state: (): ProfileState => ({
     profileDetails: null,
     fetchedData: null,
-    allUserDetails: null,
+    allUserDetails: storedUserDetails ? JSON.parse(storedUserDetails) : null,
   }),
 
   // Getters
@@ -69,6 +71,7 @@ export const useProfileStore = defineStore('profile', {
     },
     setAllUserDetails(userObject: { access_token: string }) {
       this.allUserDetails = userObject;
+      localStorage.setItem('allUserDetails', JSON.stringify(userObject));
     },
     logUserDetails() {
       console.log('User Details:', this.allUserDetails);

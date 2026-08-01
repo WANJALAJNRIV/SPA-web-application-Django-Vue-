@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --color-ink: #1a1a1a;
+  --color-muted: #6c757d;
+  --color-bg: #f7f7f5;
+  --color-surface: #ffffff;
+  --color-border: #e5e2dc;
+  --color-accent: #a3241d;
+  --color-accent-dark: #7c1b16;
+  --font-headline: 'Merriweather', Georgia, serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-headline);
+}
+
+a {
+  color: inherit;
+}
+
+.category-badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: rgba(163, 36, 29, 0.08);
+  padding: 3px 10px;
+  border-radius: 999px;
+}

@@ -18,8 +18,21 @@
     }
 
     h2 {
-      color: blue;
+      color: #a3241d;
       margin-bottom: 20px;
+    }
+
+    .brand {
+      color: #a3241d;
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 0.5px;
+    }
+
+    .tagline {
+      color: #6c757d;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
     }
 
     form {
@@ -48,7 +61,7 @@
     }
 
     button {
-      background-color: blue;
+      background-color: #a3241d;
       color: white;
       padding: 12px 20px;
       border: none;
@@ -58,11 +71,13 @@
     }
 
     button:hover {
-      background-color: #0066cc;
+      background-color: #7c1b16;
     }
   </style>
 
   <div class="container">
+    <div class="brand">Horizon News</div>
+    <p class="tagline">Create your account</p>
     <h2>Sign Up</h2>
     <form method="post" action="{% url 'register' %}" enctype="multipart/form-data">
 

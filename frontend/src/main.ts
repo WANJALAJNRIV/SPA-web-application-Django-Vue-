@@ -6,6 +6,7 @@ import { pinia } from './store/store';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
+import './assets/main.css';
 
 const app = createApp(App)
 

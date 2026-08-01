@@ -49,11 +49,11 @@
     }
 
     input:focus {
-      border-color: #0d6efd;
+      border-color: #a3241d;
     }
 
     button {
-      background-color: #0d6efd;
+      background-color: #a3241d;
       color: #fff;
       padding: 10px 15px;
       border: none;
@@ -66,24 +66,40 @@
     }
 
     button:hover {
-      background-color: #0b5ed7;
+      background-color: #7c1b16;
     }
 
     .footer-link {
       margin-top: 15px;
       display: block;
       font-size: 14px;
-      color: #0d6efd;
+      color: #a3241d;
       text-decoration: none;
     }
 
     .footer-link:hover {
       text-decoration: underline;
     }
+
+    .brand {
+      color: #a3241d;
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .tagline {
+      color: #6c757d;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
   </style>
 
   <div class="container">
     <div class="card">
+      <div class="brand">Horizon News</div>
+      <p class="tagline">Stay informed, your way.</p>
       <h2>Login</h2>
       <form method="post" action="{% url 'login' %}">
         {% csrf_token %}

@@ -1,55 +1,60 @@
 <template>
   <div class="profile-container">
     <div class="profile-header">
-      <div class="h3">{{ title }}</div>
+      <h1>{{ title }}</h1>
       <router-link class="edit-profile-link" :to="{ name: 'EditProfile' }">Edit Profile</router-link>
     </div>
 
-    
-
     <!-- Display user details -->
     <div class="profile-section" v-if="userDetails">
-      <h3>User Details:</h3>
-      <ul>
-        <li>
-          <strong>
-            <img :src="'http://localhost:8000' + userDetails.profile_image" alt="Profile photo" />
-            <p>Profile photo</p>
-          </strong>
+      <div class="identity-row">
+        <img
+          v-if="!imageFailed"
+          :src="'http://localhost:8000' + userDetails.profile_image"
+          alt="Profile photo"
+          class="avatar"
+          @error="imageFailed = true"
+        />
+        <div v-else class="avatar avatar-fallback">{{ initials }}</div>
+        <div>
+          <p class="username">{{ userDetails.username }}</p>
+          <p class="email">{{ userDetails.email }}</p>
+        </div>
+      </div>
+      <dl class="details-list">
+        <dt>Date of Birth</dt>
+        <dd>{{ userDetails.date_of_birth || 'Not set' }}</dd>
+      </dl>
+    </div>
+
+    <!-- Display favorite categories with delete buttons -->
+    <div class="profile-section" v-if="userDetails && favoriteCategories.length > 0">
+      <h2>Favorite Categories</h2>
+      <ul class="category-list">
+        <li v-for="categoryItem in favoriteCategories" :key="categoryItem.id">
+          <span class="category-badge">{{ categoryItem.category.name }}</span>
+          <button class="delete-button" @click="deleteCategory(categoryItem.category.id)">Remove</button>
         </li>
-        <li><strong>Username:</strong> {{ userDetails.username }}</li>
-        <li><strong>Email:</strong> {{ userDetails.email }}</li>
-        <li><strong>Date of Birth:</strong> {{ userDetails.date_of_birth }}</li>
       </ul>
     </div>
 
-      <!-- Display favorite categories with delete buttons -->
-  <div class="profile-section" v-if="userDetails && favoriteCategories.length > 0">
-    <h3>Favorite Categories:</h3>
-    <ul>
-      <li v-for="categoryItem in favoriteCategories" :key="categoryItem.id">
-        {{ categoryItem.category.name }}
-        <button @click="deleteCategory(categoryItem.category.id)">Delete</button>
-      </li>
-    </ul>
-  </div>
-
-
     <!-- Choose from existing categories section -->
     <div class="profile-section">
-      <h3>Choose from Existing Categories:</h3>
-      <select v-model="selectedCategory">
-        <option v-for="category in allCategories" :key="category.id" :value="category.id">
-          {{ category.name }}
-        </option>
-      </select>
-      <button @click="addCategory">Add</button>
+      <h2>Add a Favorite Category</h2>
+      <div class="add-category-row">
+        <select v-model="selectedCategory">
+          <option v-for="category in allCategories" :key="category.id" :value="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+        <button class="add-button" @click="addCategory">Add</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useProfileStore } from '../store/store';
 
 interface UserDetails {
@@ -78,7 +83,13 @@ const userDetails = ref<UserDetails | null>(null);
 const favoriteCategories = ref<CategoryItem[]>([]);
 const allCategories = ref<Category[]>([]);
 const selectedCategory = ref<number | null>(null);
+const imageFailed = ref(false);
 const title = 'Profile';
+
+const initials = computed(() => {
+  const username = userDetails.value?.username || '';
+  return username.slice(0, 2).toUpperCase();
+});
 
 const fetchData = async () => {
   try {
@@ -93,6 +104,7 @@ const fetchData = async () => {
     if (response.ok) {
       const data = await response.json();
       userDetails.value = data;
+      imageFailed.value = false;
     } else {
       console.error('Failed to fetch user details:', response.statusText);
     }
@@ -189,12 +201,9 @@ fetchData(); // Directly fetch data without onMounted
 
 <style scoped>
 .profile-container {
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 8px 20px 40px;
 }
 
 .profile-header {
@@ -204,51 +213,150 @@ fetchData(); // Directly fetch data without onMounted
   margin-bottom: 20px;
 }
 
-.h3 {
-  color: #3498db;
+.profile-header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--color-ink, #1a1a1a);
 }
 
 .edit-profile-link {
   text-decoration: none;
-  color: #27ae60;
-  font-weight: bold;
+  color: var(--color-accent, #a3241d);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.edit-profile-link:hover {
+  text-decoration: underline;
 }
 
 .profile-section {
   margin-bottom: 20px;
-  background-color: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-surface, #fff);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border, #e5e2dc);
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.profile-section h2 {
+  margin: 0 0 14px;
+  font-size: 1.1rem;
+  color: var(--color-ink, #1a1a1a);
 }
 
-li {
-  margin-bottom: 10px;
-  color: #333;
-}
-
-strong {
+.identity-row {
   display: flex;
   align-items: center;
-  color: #333;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
-img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
+.avatar {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border, #e5e2dc);
 }
 
-pre {
-  white-space: pre-wrap;
-  background-color: #ecf0f1;
-  padding: 10px;
-  border-radius: 5px;
+.avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent, #a3241d);
+  color: #fff;
+  font-family: var(--font-headline, Georgia, serif);
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.username {
+  margin: 0 0 2px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-ink, #1a1a1a);
+}
+
+.email {
+  margin: 0;
+  color: var(--color-muted, #6c757d);
+  font-size: 0.9rem;
+}
+
+.details-list {
+  margin: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border, #e5e2dc);
+}
+
+.details-list dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted, #6c757d);
+  margin-bottom: 2px;
+}
+
+.details-list dd {
+  margin: 0;
+  color: var(--color-ink, #1a1a1a);
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.delete-button {
+  background: none;
+  border: 1px solid var(--color-border, #e5e2dc);
+  color: var(--color-muted, #6c757d);
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.delete-button:hover {
+  border-color: var(--color-accent, #a3241d);
+  color: var(--color-accent, #a3241d);
+}
+
+.add-category-row {
+  display: flex;
+  gap: 10px;
+}
+
+.add-category-row select {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border, #e5e2dc);
+  border-radius: 6px;
+  background: var(--color-surface, #fff);
+}
+
+.add-button {
+  background: var(--color-accent, #a3241d);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.add-button:hover {
+  background: var(--color-accent-dark, #7c1b16);
 }
 </style>
